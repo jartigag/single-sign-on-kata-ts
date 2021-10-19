@@ -1,9 +1,15 @@
 import SingleSignOnRegistry from '../../src/sso/SingleSignOnRegistry';
 import SSOToken from '../../src/sso/SSOToken';
 
-export class SingleSignOnRegistryValidStub implements SingleSignOnRegistry {
+export class SingleSignOnRegistryStub implements SingleSignOnRegistry {
+    // @ts-ignore
+    private readonly valid: boolean
+
+    constructor(valid: boolean) {
+        this.valid = valid
+    }
     isValid(token: string): boolean {
-        return true;
+        return this.valid;
     }
 
     registerNewSession(userName: string, password: string): SSOToken | undefined {
