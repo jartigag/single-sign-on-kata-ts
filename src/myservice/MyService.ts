@@ -4,7 +4,6 @@ import SingleSignOnRegistry from "../sso/SingleSignOnRegistry";
 import SSOToken from "../sso/SSOToken";
 
 export default class MyService {
-  // @ts-ignore
   private readonly registry: SingleSignOnRegistry;
 
   constructor(registry: SingleSignOnRegistry) {
@@ -30,7 +29,6 @@ export default class MyService {
   }
 
   handleUnRegister(token: SSOToken) {
-    // TODO: unregister token
-    return;
+    this.registry.unregister(token.getToken());
   }
 }
