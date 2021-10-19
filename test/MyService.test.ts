@@ -3,6 +3,7 @@ import Request from "../src/sso/Request";
 import SSOToken from "../src/sso/SSOToken";
 import { SingleSignOnRegistryDummy } from "./__mocks__/SingleSignOnRegistryDummy";
 import { SingleSignOnRegistryStub } from "./__mocks__/SingleSignOnRegistryStub";
+import { SingleSignOnRegistryFake } from "./__mocks__/SingleSignOnRegistryFake";
 
 describe("MyService", () => {
   it("invalid sso token is rejected", () => {
@@ -34,5 +35,25 @@ describe("MyService", () => {
     );
 
     expect(response.getText()).not.toEqual("hello Foo!");
+  });
+});
+
+describe("MyService", () => {
+  it("valid user-password return valid sso token", () => {
+    const service = new MyService(new SingleSignOnRegistryFake());
+
+    const response = service.handleRegister("user", "user_passwd");
+
+    expect(response).toEqual(new SSOToken("user"));
+  });
+});
+
+describe("MyService", () => {
+  it("invvalid user-password return empty sso token", () => {
+    const service = new MyService(new SingleSignOnRegistryFake());
+
+    const response = service.handleRegister("user", "invalid_password");
+
+    expect(response).toEqual(new SSOToken(""));
   });
 });
