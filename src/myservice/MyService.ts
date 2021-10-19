@@ -13,7 +13,11 @@ export default class MyService {
 
   handleRequest(request: Request): Response {
     // TODO: check request has a valid SSOToken
-    return new Response('')
+    if (this.registry.isValid(request.getSSOToken().getToken())) {
+      return new Response(`hello ${request.getName()}!`)
+    } else {
+      return new Response('')
+    }
   }
 
   handleRegister(username: string, password: string): SSOToken {
